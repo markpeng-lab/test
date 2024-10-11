@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: mark
+spec:
+  type: ClusterIP  # 使用 ClusterIP 類型的 Service
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: mysql  # 匹配的 Pods 標籤

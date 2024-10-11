@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: mark  # 指定與 NGINX 部署相同的命名空間
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name marktest1.com;  # 替換為你的個人域名
+
+        location / {
+            proxy_pass http://wordpress.mark.svc.cluster.local;  # clusterIP 可以用該指令自動讀取 service名稱+namespace名稱.svc.cluster.local
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }

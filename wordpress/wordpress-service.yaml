@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress
+  namespace: mark
+spec:
+  ports:
+    - port: 80       # Service 的端口
+      targetPort: 80 # Pod 的端口
+      protocol: TCP
+  selector:
+    app: wordpress   # 與 Deployment 中的 label 相匹配
+  type: LoadBalancer # 使用 LoadBalancer 類型以獲取外部 IP
