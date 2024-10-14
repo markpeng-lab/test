@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: mark
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 48.2.1  # 指定的版本
+    helm:
+      valueFiles:  # 使用你的 prometheus.yaml
+        - prometheus.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mark
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
