@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: slack  # 此处随意，方便识别即可
+    release: kube-prometheus-stack  # 默认 RBAC 需要设置这一段，prometheus 才会吃到设置
+  name: slack.rule
+  namespace: mark  # 确保将此替换为您的命名空间
+spec:
+  groups:
+    - name: "UP-Down"
+      rules:
+        # 第一個規則
+        - alert: UP-Down      
+          for: 1s
+          expr: up == 0
+          labels:
+            rule: slack  # Alertmanager 识别标签
+          annotations:
+            project: "LAB"
+            env: "LAB"
+            namespace: "{{$labels.namespace}}"
+            alertname: "{{$labels.pod}} Pod Pending"
+            description: "{{$labels.pod}} Pod status Pending"
+
+        # 第二個規則        

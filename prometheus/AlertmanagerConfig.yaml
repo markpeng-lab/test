@@ -1,0 +1,21 @@
+apiVersion: alertmanager.monitoring.coreos.com/v1
+kind: AlertmanagerConfig
+metadata:
+  name: example-alertmanagerconfig
+  namespace: mark  # 確保替換為您的命名空間
+spec:
+  route:
+    groupBy: ['alertname']  # 根據 alertname 分組
+    groupWait: 30s          # 在發送通知前等待時間
+    groupInterval: 5m       # 相同警報組的通知間隔
+    repeatInterval: 1h      # 重複警報的間隔
+    receiver: 'slack'       # 默認的接收者
+
+  receivers:
+    - name: 'slack'
+      slackConfigs:
+        - apiURL: 'https://hooks.slack.com/services/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'  # 替換為您的 Slack Webhook URL
+          channel: '#test'  # 發送通知的 Slack 頻道
+          sendResolved: true   # 是否在警報恢復時發送通知
+          
+  # 自定義的警報路由和接收器可以在此添加
