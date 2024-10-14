@@ -7,7 +7,7 @@ data:
   default.conf: |
     server {
         listen 80;
-        server_name marktest1.com;  # 替換為你的個人域名
+        server_name marktest.com;  # 替換為你的個人域名
 
         location / {
             proxy_pass http://wordpress.mark.svc.cluster.local;  # clusterIP 可以用該指令自動讀取 service名稱+namespace名稱.svc.cluster.local
