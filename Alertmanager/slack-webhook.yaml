@@ -35,9 +35,8 @@ spec:
             key: apiURL  # 引用 Secret 中的 key
           sendResolved: true
           channel: '#test'  # 設定發送到的 Slack 頻道
-          text: |
-            警報通知: {{ .CommonAnnotations.summary }}
-            觸發時間: {{ .StartsAt }}
-            Pod 名稱: {{ .Labels.pod }}
-            異常描述: {{ .CommonAnnotations.description }}
-            異常級別: {{ .Labels.severity }}
+          text: |-
+          {{ .CommonAnnotations.description }}
+          namespace: {{ .CommonAnnotations.namespace }}
+          Replica_number: {{ .CommonAnnotations.Replica_number }}
+          Deployment: {{ .CommonAnnotations.deployment }}
