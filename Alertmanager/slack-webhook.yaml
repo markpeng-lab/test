@@ -36,4 +36,8 @@ spec:
           sendResolved: true
           channel: '#test'  # 設定發送到的 Slack 頻道
           text: |
-            Pod 名稱: {{ .Labels.pod }}
+            *Alert Name:* {{ .Annotaions.alertname }}
+            *Description:* {{ .Annotaions.description }}
+            *Pod Name:* {{ .Labels.pod }}
+            *Namespace:* {{ .Lables.namespace }}
+            *Value:* {{ .Annotaions.value }}
