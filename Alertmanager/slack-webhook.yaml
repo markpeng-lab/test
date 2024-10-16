@@ -19,7 +19,7 @@ spec:
     groupBy: ["pod_name"]  # 根據 pod_name 分組
     groupWait: 10s  # 發送通知前的等待時間
     groupInterval: 30s  # 相同警報組的通知間隔
-    repeatInterval: 1m  # 重複通知的時間間隔
+    repeatInterval: 30s  # 重複通知的時間間隔
     routes:
     - receiver: slack
       matchers:
@@ -35,9 +35,4 @@ spec:
             key: apiURL  # 引用 Secret 中的 key
           sendResolved: true
           channel: '#test'  # 設定發送到的 Slack 頻道
-          text: |
-            *Alert Name:* {{ .CommonAnnotations.alertname }}
-            *Description:* {{ .CommonAnnotations.description }}
-            *Pod Name:* {{ .Labels.pod }}
-            *Namespace:* {{ .Labels.namespace }}
-            *Value:* {{ .CommonAnnotations.value }}
+          text: '測試'  # 將通知內容改為 "測試"
