@@ -18,8 +18,8 @@ spec:
     receiver: "slack"  # 預設的接收者
     groupBy: ["pod_name"]  # 根據 pod_name 分組
     groupWait: 10s  # 發送通知前的等待時間
-    groupInterval: 2m  # 相同警報組的通知間隔
-    repeatInterval: 1h  # 重複通知的時間間隔
+    groupInterval: 30s  # 相同警報組的通知間隔
+    repeatInterval: 30s  # 重複通知的時間間隔
     routes:
     - receiver: slack
       matchers:
