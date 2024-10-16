@@ -15,12 +15,24 @@ spec:
           for: 1s
           expr: up == 0
           labels:
-            rule: slack  # Alertmanager 识别标签
+            app: test  # Alertmanager 识别标签
           annotations:
             project: "LAB"
             env: "LAB"
             namespace: "{{$labels.namespace}}"
             alertname: "{{$labels.pod}} Pod Pending"
             description: "{{$labels.pod}} Pod status Pending"
-
-        # 第二個規則        
+    - name: Pod-dp-Replica-2
+      rules:
+      # 第二個規則
+      - alert: Pod-dp-Replica-2
+        expr: kube_deployment_status_replicas{namespace="mark"} > 1
+        for: 1m
+        labels:
+          app: test
+        annotations:
+          summary: "Pod Replicas over Than 4"
+          description: "The number of replicas for kube-state-metrics pod is over than 4 in namespace default."
+          namespace: "{{ $labels.namespace }}"
+          Replica_number: "{{ $value }}"
+          deployment: "{{ $labels.deployment }}"

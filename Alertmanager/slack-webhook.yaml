@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: slack-webhook
+  namespace: mark  # 替換為您的命名空間
+data:
+  apiURL: aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDA3UkI5N0JQNEwvQjA3UldQUzQ2OVkvN1luQVVGMUNIWERYZFNyUG9kYmhjY3No
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager-config
+  namespace: mark  # 替換為您的命名空間
+  labels:
+    alertmanagerConfig: stack
+spec:
+  route:
+    receiver: "slack"  # 預設的接收者
+    groupBy: ["pod_name"]  # 根據 pod_name 分組
+    groupWait: 10s  # 發送通知前的等待時間
+    groupInterval: 2m  # 相同警報組的通知間隔
+    repeatInterval: 1h  # 重複通知的時間間隔
+    routes:
+    - receiver: slack
+      matchers:
+      - matchType: =
+        name: slack.rule
+        value: slack
+
+  receivers:
+    - name: slack
+      slackConfigs:
+        - apiURL:
+            name: slack-webhook  # 引用 Secret 名稱
+            key: apiURL  # 引用 Secret 中的 key
+          sendResolved: true
+          channel: '#test'  # 設定發送到的 Slack 頻道
+          text: '測試'  # 將通知內容改為 "測試"
